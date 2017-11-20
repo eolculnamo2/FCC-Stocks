@@ -2,10 +2,10 @@ var socket = io.connect()
 var dataset = [];
 var cityData = [];
 //DOM elements
-var btn = document.getElementById("loader")
+var btn = document.getElementById("loader");
 var chart = document.getElementById("chart");
 var textTool = document.getElementById("textTool");
-var search = document.getElementById("sym").value
+var deleter = document.getElementById("delBut");
 
 //d3 graph function
 function createGraph(){
@@ -109,12 +109,20 @@ canvas.append("g")
 
 //event listeners
 btn.addEventListener('click',()=>{
+  document.getElementById("deleteList").innerHTML = "";
+  cityData=[];
   socket.emit('search', document.getElementById("sym").value)
   socket.emit('load')
   
 })
 
+deleter.addEventListener('click', ()=>{
 
+  socket.emit('delete', document.getElementById('deleteList').value)
+    document.getElementById("deleteList").innerHTML = "";
+  cityData=[];
+  
+})
 //requests from server
 socket.on('fullData', (data)=>{
   cityData.push(data)
@@ -122,6 +130,9 @@ socket.on('fullData', (data)=>{
 socket.on('load', (data)=>{
   dataset = data;
   createGraph();
-  
+  document.getElementById("deleteList").innerHTML = "";
+  cityData.forEach((x,i)=>{
+    document.getElementById("deleteList").innerHTML += "<option>"+x+"</option>"
+  })
 })
 
