@@ -10,11 +10,34 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
+    <center>
+    <h2>
+      Chart the Stock Market
+      </h2>
+    </center>
+    <p>
+      Stock Symbol:
+    </p>
+    <input id = "sym"> 
     <button id = "loader">
       Load
     </button>
+    <div id = "textTool">
+      
+    </div>
   <div id = "chart">
     </div>
+    <p>
+      Delete Stock:
+    </p>
+    <select id = "deleteList">
+    </select>
+    <button id = "delBut">
+      Delete
+    </button>
+    <h4>
+      Loaded in Real Time with Web Sockets Based on Requests from Other Users
+    </h4>
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>

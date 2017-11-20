@@ -21,12 +21,29 @@ var companiesData = [];
 
 //start io connection
 io.on("connection", (socket)=>{
-  companiesData=[];
+
   console.log("Connected")
   
-  socket.on('load', ()=>{
+  socket.on('delete', (data)=>{
+    companies.forEach((x,i)=>{
+      if(x === data){
+        companies.splice(i,1)
+      }
+    })
+    loadInfo()
+  })
+  socket.on('search', (data)=>{
+    if(data.length>0){
+      companies.push(data);
+    }
+    loadInfo()
+  })
+  
+ // socket.on('load', ()=>{
     
 //quandl is nested in callback function and socket emits in success function for api request
+  function loadInfo(){
+    companiesData =[];
 var quandl = new Quandl({
     auth_token: process.env.quandlKey,
     api_version: 3,
@@ -44,21 +61,27 @@ quandl.dataset({
   end_date: "2016-01-29",
   column_index: 4
 }, function(err, response){
-    if(err)
-        throw err;
+    if(response !== undefined){
     var alpha = JSON.parse(response)
    companiesData.push(alpha.dataset.data)
-  console.log(companiesData)
 
+io.sockets.emit("fullData", alpha.dataset.dataset_code)  
 io.sockets.emit("load", companiesData)
-                        
+    }
+  else if (err){
+    console.log(err)
+  }
+  
    
   //console.log(alpha.dataset.data)
  
 });
+
  })
+  }
+  loadInfo()
   })
-})
+//})
 
 
 
