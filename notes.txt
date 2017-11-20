@@ -1,0 +1,11 @@
+Figured out Quandl API.
+Started on D3. Need to learn to use D3 line graphs.
+
+socket currently sends data on  a load button (Just for the purpose of up and running)
+=> Needs to map data according to data and value
+=> Add input to add request for specific stock
+=> Style
+
+Act like this is the one you'd show at the inteview!
+
+http://d3indepth.com/shapes/
